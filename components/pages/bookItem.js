@@ -4,7 +4,7 @@ import React from 'react';
 import {Row, Col, Well, Button} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {addToCart} from '../../actions/cartActions';
+import {addToCart, updateCartItem} from '../../actions/cartActions';
 
 
 class BookItem extends React.Component{
@@ -29,6 +29,7 @@ class BookItem extends React.Component{
 				this.props.addToCart(book) // if no other of the same Item in the cart then add the item 
 			}else {
 				// This is updating the item and all that fun stuff Whoo!
+				this.props.updateCartItem(_id,1);
 			}
 		}else {
 			// IF CART IS EMPTY 
@@ -60,7 +61,8 @@ function mapStateToProps (state){
 }
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
-		addToCart:addToCart
+		addToCart:addToCart,
+		updateCartItem:updateCartItem
 	}, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BookItem);

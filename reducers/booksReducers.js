@@ -32,9 +32,10 @@ export function booksReducers (state={books:[{
       //determine at whihc index in books array is the books to be deleted
       const indexToDelete = currentBookToDelete.findIndex(
         function(book){
-          return book._id == action.payload._id;
+          return book._id == action.payload;
         }
       )
+
       // using slice to remove the book and all that
       return {books: [...currentBookToDelete.slice(0, indexToDelete),
         ...currentBookToDelete.slice(indexToDelete + 1)]}
