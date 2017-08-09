@@ -1,55 +1,42 @@
-"use strict"
 
-export function cartReducers (state={cart:[]},action)
-{
-	switch (action.type){
+"use strict"
+// CART REDUCERS
+export function cartReducers(state={cart:[]},action) {
+	switch(action.type){
+		case "GET_CART":
+			return{...state,
+				   cart:action.payload,
+				   totalAmount:totals(action.payload).amount,
+				   totalQty: totals(action.payload).qty
+				  }
+			break;
 		case "ADD_TO_CART":
-			return {
-				...state, 
-				cart:[...action.payload], 
-				totalAmount: totals(action.payload).amount,
-				totalQty: totals(action.payload).qty
-			}
+			return {...state,
+					cart:action.payload,
+					totalAmount:
+					totals(action.payload).amount,
+					totalQty: totals(action.payload).qty
+				   }
+			break;
+		case "UPDATE_CART":
+			return {...state,
+					cart:action.payload,
+					totalAmount:
+					totals(action.payload).amount,
+					totalQty: totals(action.payload).qty
+				   }
 			break;
 		case "DELETE_CART_ITEM":
-			return {
-				...state,
-				cart:action.payload,
-				totalAmount: totals(action.payload).amount,
-				totalQty: totals(action.payload).qty
-			}
+			return {...state,
+					cart:action.payload,
+					totalAmount:
+					totals(action.payload).amount,
+					totalQty: totals(action.payload).qty
+				   }
 			break;
-		case "UPDATE_CART_ITEM":
-			// CREATe a copy of the current array
-			const currentCartItemToUpdate = [...state.cart]
-			//determine at whihc index in boks is the book to be deleted
-			const indexToUpdate = currentCartItemToUpdate.findIndex(
-				function(book){
-					return book._id === action._id;
-				}
-			)
-			// create a new book object with the new values and with the same array index of the item we want to replace.
-			// To acheien this we will use .. spread but we could use concat methos too
-			const newItemToUpdate = {
-				...currentCartItemToUpdate[indexToUpdate],
-				quantity: currentCartItemToUpdate[indexToUpdate].quantity + action.unit
-			}
-
-			//use slice to remove the book at the specified index replace with the new object and concatenate
-			// with the rest of items in the array
-			let cartUpdate =  [...currentCartItemToUpdate.slice(0,indexToUpdate),
-							   newItemToUpdate,...currentCartItemToUpdate.slice(indexToUpdate + 1)]
-			return {
-				...state,
-				cart: cartUpdate,
-				totalAmount: totals(cartUpdate).amount,
-				totalQty: totals(cartUpdate).qty
-			}
-			break;
-					   }
+					  }
 	return state
 }
-
 
 
 export function totals(payloadArr){

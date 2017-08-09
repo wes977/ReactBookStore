@@ -25,29 +25,29 @@ class Cart extends React.Component{
 
 	}
 	onIncrement(_id){
-		this.props.updateCartItem(_id, 1);
+		this.props.updateCartItem(_id, 1, this.props.cart);
 	}
 	onDecrement(_id, quantity){
 		if(quantity > 1){
-			this.props.updateCartItem(_id, -1);
+			this.props.updateCartItem(_id, -1, this.props.cart);
 
 		} else {
 			this.onDelete(_id);
 		}
 	}
-	
-constructor(){
-super();
-this.state = {
-showModal:false
-}
-}
-open(){
-this.setState({showModal:true})
-}
-close(){
-this.setState({showModal:false})
-}
+
+	constructor(){
+		super();
+		this.state = {
+			showModal:false
+		}
+	}
+	open(){
+		this.setState({showModal:true})
+	}
+	close(){
+		this.setState({showModal:false})
+	}
 	render(){
 		if(this.props.cart[0]){         // If the cart got anything in it and all that render a cart
 			return this.renderCart();
@@ -93,23 +93,23 @@ this.setState({showModal:false})
 		<Row>
 		<Col xs={12}>
 		<h6>Totla amount: ${this.props.totalAmount}</h6>
-<Button onClick={this.open.bind(this)} bsStyle="success" bsSize="small">
-			PROCEED TO CHECKOUT
+		<Button onClick={this.open.bind(this)} bsStyle="success" bsSize="small">
+		PROCEED TO CHECKOUT
 			</Button>
 </Col>
 </Row>
-		<Modal show={this.state.showModal} onHide={this.close.bind(this)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Thank You!</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-           <h6>Your order has been saved</h6>
-          </Modal.Body>
-          <Modal.Footer>
-			   <Col xs={6}>Total $${this.props.totalAmount}</Col>
-            <Button onClick={this.close.bind(this)}>Close</Button>
-          </Modal.Footer>
-        </Modal>
+<Modal show={this.state.showModal} onHide={this.close.bind(this)}>
+	<Modal.Header closeButton>
+		<Modal.Title>Thank You!</Modal.Title>
+</Modal.Header>
+<Modal.Body>
+			<h6>Your order has been saved</h6>
+</Modal.Body>
+<Modal.Footer>
+				<Col xs={6}>Total $${this.props.totalAmount}</Col>
+<Button onClick={this.close.bind(this)}>Close</Button>
+</Modal.Footer>
+</Modal>
 </Panel>
 
 )
@@ -121,7 +121,6 @@ function mapStateToProps(state){
 		cart:state.cart.cart,
 		totalAmount: state.cart.totalAmount
 	}
-
 }
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({

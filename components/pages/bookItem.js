@@ -29,7 +29,7 @@ class BookItem extends React.Component{
 				this.props.addToCart(book) // if no other of the same Item in the cart then add the item 
 			}else {
 				// This is updating the item and all that fun stuff Whoo!
-				this.props.updateCartItem(_id,1);
+				this.props.updateCartItem(_id,1, this.props.cart);
 			}
 		}else {
 			// IF CART IS EMPTY 
